@@ -1,7 +1,7 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/guvvalasdb
+    url: jdbc:postgresql://guvvalas-db-route-career4kishore1984-dev.apps.sandbox-m4.g2pi.p1.openshiftapps.com:5432/guvvalasdb
     username: admin
     password: admin
     driverClassName: org.postgresql.Driver
