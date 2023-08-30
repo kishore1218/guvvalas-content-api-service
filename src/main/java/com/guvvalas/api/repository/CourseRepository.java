@@ -31,7 +31,7 @@ public class CourseRepository {
 
     private static final String GET_COURSE_BY_ID ="SELECT *FROM COURSE WHERE ID=:courseId ";
 
-    private static final String GET_ALL_COURSES ="SELECT *FROM COURSE order by COURSE_NAME";
+    private static final String GET_ALL_COURSES ="SELECT *FROM guvvalasdb.COURSE order by guvvalasdb.COURSE_NAME";
 
     private static final String UPDATE_COURSE="UPDATE COURSE SET COURSE_NAME=:courseName,DESCRIPTION=:desc,LOGO_PATH=:logo,URL=:url,IS_PUBLISH:ispublish WHERE ID=:courseId";
 
