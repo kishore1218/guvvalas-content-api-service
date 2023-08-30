@@ -1,0 +1,7 @@
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/guvvalasdb
+    username: admin
+    password: admin
+    driverClassName: org.postgresql.Driver
