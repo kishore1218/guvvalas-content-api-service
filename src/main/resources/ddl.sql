@@ -11,7 +11,7 @@ create table COURSE(
 create table CHAPTER(
 	ID SERIAL primary key,
 	CHAPTER_CODE VARCHAR(200) unique not null,
-	CHAPTER_NAME VARCHAR(200) unique not null,
+	CHAPTER_NAME VARCHAR(200)  not null,
 	DESCRIPTION VARCHAR(500),
 	CHAPTER_CONTENT VARCHAR(5024),
 	SEQ INT not null,
