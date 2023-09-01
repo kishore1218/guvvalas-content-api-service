@@ -21,7 +21,7 @@ public interface ICourseService {
      * @param id
      * @return
      */
-    public Course getCourse(Integer id);
+    public Course getCourse(String id);
 
 
     /**

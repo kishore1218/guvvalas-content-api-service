@@ -22,17 +22,19 @@ import java.util.Map;
 public class ChapterRepository {
 
 
-    private static final String COURSE_INSERT_SQL="INSERT INTO CHAPTER(CHAPTER_NAME,DESCRIPTION,SEQ,COURSE_ID,CHAPTER_CONTENT,IS_PUBLISH) VALUES(:aChapterName,:description,:seq,:courseId,:content,:isPublish)";
+    private static final String COURSE_INSERT_SQL="INSERT INTO CHAPTER(CHAPTER_NAME,CHAPTER_CODE,DESCRIPTION,SEQ,COURSE_ID,CHAPTER_CONTENT,IS_PUBLISH) VALUES(:aChapterName,:code,:description,:seq,:courseId,:content,:isPublish)";
 
-    private static final String GET_CHAPTER_SQL= "SELECT *FROM CHAPTER WHERE ID=:aChapterId";
+    private static final String GET_CHAPTER_SQL= "SELECT *FROM CHAPTER WHERE CHAPTER_CODE=:aUrl";
 
 
-    private static final String GET_ALL_CHAPTERS_SQL="SELECT *FROM CHAPTER WHERE COURSE_ID=:aCourseId order by seq" ;
+    private static final String GET_ALL_CHAPTERS_SQL="SELECT *FROM CHAPTER WHERE COURSE_ID=(SELECT ID FROM COURSE WHERE URL=:aUrl) order by seq" ;
+
+
     private static final String DELETE_CHAPTER_SQL="DELETE FROM CHAPTER WHERE ID=:aChapterId";
 
     private static final String UPDATE_CHAPTER_CONTENT_SQL="UPDATE CHAPTER SET CHAPTER_CONTENT=:content WHERE ID=:aChapterId";
 
-    private static final String UPDATE_CHAPTER_SQL="UPDATE CHAPTER SET CHAPTER_NAME=:aChapterName,DESCRIPTION=:DESCRIPTION,SEQ=:seq,CHAPTER_CONTENT=:content,IS_PUBLISH=:isPublish WHERE ID=:aChapterId";
+    private static final String UPDATE_CHAPTER_SQL="UPDATE CHAPTER SET CHAPTER_NAME=:aChapterName,CHAPTER_CODE=:code,DESCRIPTION=:description,SEQ=:seq,CHAPTER_CONTENT=:content,IS_PUBLISH=:isPublish WHERE ID=:aChapterId";
 
 
     @Autowired
@@ -51,6 +53,7 @@ public class ChapterRepository {
         params.put("content",chapter.getContent());
         params.put("courseId",chapter.getCourseId());
         params.put("isPublish",chapter.getIsPublish());
+        params.put("code",chapter.getCode());
 
         jdbcTemplate.update(COURSE_INSERT_SQL,params);
     }
@@ -69,6 +72,8 @@ public class ChapterRepository {
         params.put("content",chapter.getContent());
         params.put("courseId",chapter.getCourseId());
         params.put("isPublish",chapter.getIsPublish());
+        params.put("aChapterId",chapter.getId());
+        params.put("code",chapter.getCode());
 
         jdbcTemplate.update(UPDATE_CHAPTER_SQL,params);
     }
@@ -104,9 +109,9 @@ public class ChapterRepository {
      *
      * @return
      */
-    public List<Chapter> getChapters(Integer courseId){
+    public List<Chapter> getChapters(String courseId){
         Map<String,Object> params=new HashMap<String,Object>();
-        params.put("aCourseId",courseId);
+        params.put("aUrl",courseId);
         return jdbcTemplate.query(GET_ALL_CHAPTERS_SQL, params, new RowMapper<Chapter>() {
 
             /**
@@ -122,8 +127,9 @@ public class ChapterRepository {
                 return Chapter.builder()
                         .id(rs.getInt("ID"))
                         .courseId(rs.getInt("COURSE_ID"))
-                        .content(rs.getString("CHAPTER_CONTENT"))
+//                        .content(rs.getString("CHAPTER_CONTENT"))
                         .name(rs.getString("CHAPTER_NAME"))
+                        .code(rs.getString("CHAPTER_CODE"))
                         .description(rs.getString("DESCRIPTION"))
                         .sequence(rs.getInt("SEQ"))
                         .isActive(rs.getBoolean("IS_ACTIVE"))
@@ -136,12 +142,12 @@ public class ChapterRepository {
 
     /**
      *
-     * @param chapterId
+     * @param chapterCode
      * @return
      */
-    public Chapter getChapter(Integer chapterId){
+    public Chapter getChapter(String chapterCode){
         Map<String,Object> params=new HashMap<String,Object>();
-        params.put("aChapterId",chapterId);
+        params.put("aUrl",chapterCode);
 
         return jdbcTemplate.queryForObject(GET_CHAPTER_SQL, params, new RowMapper<Chapter>() {
 
@@ -160,6 +166,7 @@ public class ChapterRepository {
                         .courseId(rs.getInt("COURSE_ID"))
                         .content(rs.getString("CHAPTER_CONTENT"))
                         .name(rs.getString("CHAPTER_NAME"))
+                        .code(rs.getString("CHAPTER_CODE"))
                         .description(rs.getString("DESCRIPTION"))
                         .sequence(rs.getInt("SEQ"))
                         .isActive(rs.getBoolean("IS_ACTIVE"))

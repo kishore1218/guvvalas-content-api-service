@@ -25,11 +25,9 @@ public class CourseRepository {
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
 
-    private static final String QUERY="select *from imps_txn where tnx_id=:atnxId";
-
     private static final String COURSE_INSERT="INSERT INTO COURSE(COURSE_NAME,DESCRIPTION,LOGO_PATH,URL,IS_ACTIVE,IS_PUBLISH) VALUES(:aCourseName,:description,:logo,:url,:isActive,:isPublish)";
 
-    private static final String GET_COURSE_BY_ID ="SELECT *FROM COURSE WHERE ID=:courseId ";
+    private static final String GET_COURSE_BY_ID ="SELECT *FROM COURSE WHERE URL=:aUrl";
 
     private static final String GET_ALL_COURSES ="SELECT *FROM COURSE order by COURSE_NAME";
 
@@ -75,10 +73,10 @@ public class CourseRepository {
      * @param id
      * @return
      */
-    public Course getCourse(Integer id){
+    public Course getCourse(String id){
 
         Map<String,Object> params=new HashMap<String,Object>();
-        params.put("courseId",id);
+        params.put("aUrl",id);
 
         var course=jdbcTemplate.queryForObject(GET_COURSE_BY_ID, params, new RowMapper<Course>() {
             /**

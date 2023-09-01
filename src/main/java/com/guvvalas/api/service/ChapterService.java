@@ -46,7 +46,7 @@ public class ChapterService implements IChapterService{
      * @return
      */
     @Override
-    public List<Chapter> getChapters(Integer courseId) {
+    public List<Chapter> getChapters(String courseId) {
         return chapterRepository.getChapters(courseId);
     }
 
@@ -55,7 +55,7 @@ public class ChapterService implements IChapterService{
      * @return
      */
     @Override
-    public Chapter getChapter(Integer chapterId) {
+    public Chapter getChapter(String chapterId) {
         var res= chapterRepository.getChapter(chapterId);
         log.info("chapter--> {}",res);
         return res;

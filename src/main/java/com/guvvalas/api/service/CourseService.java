@@ -34,7 +34,7 @@ public class CourseService implements ICourseService {
      * @return
      */
     @Override
-    public Course getCourse(Integer id) {
+    public Course getCourse(String id) {
         return courseRepository.getCourse(id);
     }
 

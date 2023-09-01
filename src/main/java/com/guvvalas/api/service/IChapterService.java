@@ -34,7 +34,7 @@ public interface IChapterService{
      *
      * @return
      */
-    public List<Chapter> getChapters(Integer courseId);
+    public List<Chapter> getChapters(String courseId);
 
 
     /**
@@ -42,7 +42,7 @@ public interface IChapterService{
      * @param chapterId
      * @return
      */
-    public Chapter getChapter(Integer chapterId);
+    public Chapter getChapter(String chapterId);
 
 
     /**

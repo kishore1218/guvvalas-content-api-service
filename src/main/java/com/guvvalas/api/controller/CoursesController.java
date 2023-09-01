@@ -43,7 +43,7 @@ public class CoursesController {
      * @return
      */
     @GetMapping("/course/{id}")
-    public ResponseEntity<Mono<Course>> getCourse(@PathVariable("id") Integer id){
+    public ResponseEntity<Mono<Course>> getCourse(@PathVariable("id") String id){
         log.info("getCourses...");
         var res = Mono.fromCallable(() -> {
             return courseService.getCourse(id);

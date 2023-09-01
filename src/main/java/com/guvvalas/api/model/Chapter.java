@@ -9,6 +9,8 @@ public class Chapter {
 
     String name;
 
+    String code;
+
     Integer id;
 
     String url;
